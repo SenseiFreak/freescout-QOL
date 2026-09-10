@@ -1,0 +1,20 @@
+{
+  "name": "vendor/freescout-qol",
+  "description": "Freescout quality-of-life module",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "FreescoutQOL\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.4"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "FreescoutQOL\\ServiceProvider"
+      ]
+    }
+  }
+}
