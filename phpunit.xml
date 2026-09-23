@@ -3,6 +3,7 @@
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test.php">./Modules/Qol/Tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>

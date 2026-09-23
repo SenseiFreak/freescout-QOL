@@ -1,0 +1,44 @@
+/* freescout-qol styles */
+
+.qol-new-dropdown .dropdown-menu {
+    min-width: 160px;
+}
+
+/* Feature 5: highlighted customer/agent reply badge shown under the sender name/email */
+.qol-reply-badge {
+    display: inline-block;
+    margin: 2px 0 4px;
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 16px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+}
+
+.qol-reply-badge.qol-reply-customer {
+    background-color: #fdf1d8;
+    color: #a6740a;
+}
+
+.qol-reply-badge.qol-reply-agent {
+    background-color: #dceafb;
+    color: #0b5da3;
+}
+
+.note-editable.qol-drop-target {
+    outline: 2px dashed #337ab7;
+    outline-offset: -4px;
+    background-color: #eef7ff;
+}
+
+/* The subject opens only from the dedicated toolbar action. The editor itself
+   remains interactive once that action has deliberately revealed it. */
+body.qol-subject-gated .conv-subjtext {
+    pointer-events: none;
+}
+
+body.qol-subject-gated .conv-subjtext .conv-subj-editor {
+    pointer-events: auto;
+}

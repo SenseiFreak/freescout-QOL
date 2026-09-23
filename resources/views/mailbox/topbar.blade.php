@@ -1,11 +1,24 @@
-<div class="qol-topbar">
-    <div class="qol-new-dropdown">
-        <button id="qol-new-button" class="btn btn-primary">New <span class="caret">▼</span></button>
-        <div id="qol-new-menu" class="qol-dropdown-menu" style="display:none;position:absolute;z-index:1000;background:#fff;border:1px solid #ccc;padding:6px;">
-            <a href="/tickets/create" class="qol-new-item">New Ticket</a><br/>
-            <a href="/contacts/create" class="qol-new-item">New Contact</a>
-        </div>
-    </div>
-</div>
+@php
+    $qolMailboxes = Auth::user() ? Auth::user()->mailboxesCanView(true) : collect();
+@endphp
+<li class="dropdown qol-new-dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="qol-new-button">
+        {{ __('New') }} <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-with-icons" id="qol-new-menu">
+        @if ($qolMailboxes->count() == 1)
+            <li><a href="{{ route('conversations.create', ['mailbox_id' => $qolMailboxes->first()->id]) }}"><i class="glyphicon glyphicon-envelope"></i> {{ __('Ticket') }}</a></li>
+        @elseif ($qolMailboxes->count() > 1)
+            <li class="dropdown-submenu">
+                <a href="#"><i class="glyphicon glyphicon-envelope"></i> {{ __('Ticket') }}</a>
+                <ul class="dropdown-menu">
+                    @foreach ($qolMailboxes as $qolMailbox)
+                        <li><a href="{{ route('conversations.create', ['mailbox_id' => $qolMailbox->id]) }}">{{ $qolMailbox->name }}</a></li>
+                    @endforeach
+                </ul>
+            </li>
+        @endif
+        <li><a href="{{ route('qol.contact.create') }}"><i class="glyphicon glyphicon-user"></i> {{ __('Contact') }}</a></li>
+    </ul>
+</li>
 
-<script src="/vendor/freescout-qol/js/qol.js"></script>

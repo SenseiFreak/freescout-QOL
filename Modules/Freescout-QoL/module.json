@@ -1,0 +1,16 @@
+{
+    "name": "freescout-QoL",
+    "alias": "qol",
+    "description": "Adds quality-of-life improvements to FreeScout: persisted conversation sorting, a New (Ticket/Contact) menu, accurate Waiting Since times, Freshdesk-style merge, and customer/agent reply badges.",
+    "version": "1.2.0",
+    "author": "Sensei Freak",
+    "authorUrl": "",
+    "requiredAppVersion": "1.8.0",
+    "keywords": ["qol", "quality of life"],
+    "active": 1,
+    "order": 0,
+    "providers": [],
+    "files": [
+        "bootstrap.php"
+    ]
+}
