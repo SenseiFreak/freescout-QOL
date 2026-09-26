@@ -3,6 +3,7 @@
 @section('title', __('QoL'))
 
 @section('content')
+            <p><a href="{{ route('qol.calendar.settings') }}">{{ __('Calendar setup and connections') }}</a></p>
     <div class="container form-container">
         <div class="row"><div class="col-xs-12">
             <h2>{{ __('QoL') }}</h2>

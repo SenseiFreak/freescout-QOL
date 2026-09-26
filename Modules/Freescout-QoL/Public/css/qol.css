@@ -4,7 +4,7 @@
     min-width: 160px;
 }
 
-/* Feature 5: highlighted customer/agent reply badge shown under the sender name/email */
+/* Latest public reply, beneath the customer email in the mailbox list. */
 .qol-reply-badge {
     display: inline-block;
     margin: 2px 0 4px;
@@ -26,6 +26,21 @@
     background-color: #dceafb;
     color: #0b5da3;
 }
+
+.table-conversations .conv-customer .qol-reply-badge { display:table; margin-top:4px; white-space:nowrap; }
+.thread .qol-reply-badge { display:none; }
+#qol-ticket-events { padding:18px 20px; border-top:1px solid #dce3eb; overflow-wrap:anywhere; }
+#qol-ticket-events h3 { font-size:16px; margin:0 0 14px; }
+.qol-ticket-event { padding:12px 0; border-bottom:1px solid #e5e9ef; font-size:12px; line-height:1.6; }
+.qol-ticket-event strong { display:block; font-size:13px; }
+.qol-ticket-event small { display:block; }
+.qol-ticket-events-refresh { margin-top:12px; }
+.qol-calendar-note { background:#fff8df; padding:20px 30px; border-bottom:1px solid #eadfb9; }
+.qol-calendar-note p { white-space:pre-wrap; margin-top:12px; }
+#qol-calendar-connections { margin-top:24px; padding-top:16px; border-top:1px solid #dce3eb; }
+#qol-calendar-connections .qc-connection-form { margin:10px 0; }
+#qol-calendar-connections .qc-hint { font-size:12px; color:#637487; line-height:1.6; }
+#qol-calendar-connections #qc-connection-status { margin-top:12px; }
 
 .note-editable.qol-drop-target {
     outline: 2px dashed #337ab7;

@@ -6,6 +6,9 @@
 // regenerated after this module was added.
 require_once __DIR__.'/Http/Controllers/PreferenceController.php';
 require_once __DIR__.'/Http/Controllers/QolController.php';
+require_once __DIR__.'/Calendar/CalendarProvider.php';
+require_once __DIR__.'/Calendar/TicketCalendar.php';
+require_once __DIR__.'/Http/Controllers/CalendarController.php';
 require_once __DIR__.'/Providers/QolServiceProvider.php';
 
 app()->register(\Modules\Qol\Providers\QolServiceProvider::class);

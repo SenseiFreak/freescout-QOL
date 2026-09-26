@@ -36,6 +36,10 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerHooks()
     {
+        \Eventy::addAction('conversation.action_buttons', function () {
+            echo view('freescout-qol::conversation.calendar')->render();
+        });
+
         // --- Feature 1: keep "Arrange by / sort by" per user, so it survives page reloads ---
         // Conversation::getConvTableSorting() applies this filter for defaults *before*
         // applying whatever sorting came in the current request, so returning the user's

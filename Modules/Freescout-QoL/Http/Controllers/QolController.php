@@ -98,11 +98,17 @@ class QolController
 
     public function settings()
     {
-        if (!Auth::user() || !Auth::user()->isAdmin()) {
+        if (!Auth::user()) {
             abort(403);
         }
 
-        return view('qol::settings', ['settings' => self::getSettings()]);
+        $connections = DB::table('qol_calendar_connections')->where('user_id', Auth::id())->pluck('provider')->all();
+        $configured = [];
+        foreach (['google', 'microsoft'] as $provider) {
+            $credentials = \Modules\Qol\Calendar\CalendarProvider::settings($provider);
+            $configured[$provider] = !empty($credentials['client_id']) && !empty($credentials['client_secret']);
+        }
+        return view('qol::settings', ['settings' => self::getSettings(), 'calendarPreferences' => CalendarController::defaultCalendarOptions(), 'connections' => $connections, 'configured' => $configured]);
     }
 
     public function saveSettings(Request $request)

@@ -21,3 +21,5 @@
         <li><a href="{{ route('qol.contact.create') }}"><i class="glyphicon glyphicon-user"></i> {{ __('Contact') }}</a></li>
     </ul>
 </li>
+
+<li><a href="{{ route('qol.calendar') }}"><i class="glyphicon glyphicon-calendar"></i> {{ __('Calendar') }}</a></li>

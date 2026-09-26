@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Modules\Qol\Http\Controllers\PreferenceController;
 use Modules\Qol\Http\Controllers\QolController;
+use Modules\Qol\Calendar\TicketCalendar;
 
 class QolServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,25 @@ class QolServiceProvider extends ServiceProvider
 
     protected function registerHooks()
     {
+        \Eventy::addAction('conversation.after_customer_sidebar', function ($conversation) {
+            if (!Auth::check() || !Auth::user()->can('view', $conversation)) { return; }
+            echo view('qol::conversation.calendar_events', [
+                'ticket' => $conversation, 'events' => TicketCalendar::rows($conversation), 'ready' => TicketCalendar::ready(),
+            ])->render();
+        }, 20, 1);
+
+        // Core tracks the latest public reply separately from internal notes.
+        \Eventy::addAction('conversations_table.row_class', function ($conversation) {
+            if ((int) $conversation->last_reply_from === \App\Thread::PERSON_CUSTOMER) {
+                echo ' qol-last-reply-customer ';
+            } elseif ((int) $conversation->last_reply_from === \App\Thread::PERSON_USER) {
+                echo ' qol-last-reply-agent ';
+            }
+        }, 20, 1);
+        \Eventy::addAction('conversation.action_buttons', function () {
+            echo view('qol::conversation.calendar')->render();
+        });
+
         // --- Mailbox folder: all conversations that still need resolution ---
         // This is a normal mailbox folder entry, but it is a live view: conversations are
         // never copied or moved. It includes only active and pending conversations, which
@@ -174,6 +194,12 @@ class QolServiceProvider extends ServiceProvider
             }
         });
         \Eventy::addAction('layout.body_bottom', function () {
+            if (Auth::check()) {
+                echo view('qol::conversation.calendar_panel')->render();
+                echo '<link rel="stylesheet" href="'.asset('modules/qol/css/calendar-panel.css').'?v=1.3.3">';
+                echo '<script src="'.asset('modules/qol/js/calendar-panel.js').'?v=1.3.4"></script>';
+                echo '<script src="'.asset('modules/qol/js/ticket-calendar.js').'?v=1.3.4"></script>';
+            }
             $settings = QolController::getSettings();
             echo '<script>window.QolConfig='.json_encode([
                 'mergeUrl' => route('qol.conversations.merge'),

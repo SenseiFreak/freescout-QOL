@@ -22,3 +22,5 @@
     </ul>
 </li>
 
+
+<li><a href="{{ route('qol.calendar') }}"><i class="glyphicon glyphicon-calendar"></i> {{ __('Calendar') }}</a></li>

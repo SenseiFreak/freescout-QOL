@@ -274,23 +274,20 @@
         });
     }
 
-    // --- Feature 5: highlight customer vs agent replies under the name/email ---
+    // --- Latest public reply badge below the customer email in mailbox rows ---
     function labelThreadReplies(root) {
-        (root || document).querySelectorAll('.thread').forEach(function (thread) {
-            if (thread.querySelector('.qol-reply-badge')) return; // already labeled
-
-            var isCustomer = thread.classList.contains('thread-type-customer');
-            var isAgent = thread.classList.contains('thread-type-message');
-
-            if (!isCustomer && !isAgent) return; // notes/lineitems are left as-is
-
-            var anchor = thread.querySelector('.thread-recipients') || thread.querySelector('.thread-person');
-            if (!anchor) return;
-
-            var badge = document.createElement('div');
+        (root || document).querySelectorAll('.thread .qol-reply-badge').forEach(function (badge) { badge.remove(); });
+        (root || document).querySelectorAll('.table-conversations .conv-row').forEach(function (row) {
+            var isCustomer = row.classList.contains('qol-last-reply-customer');
+            var isAgent = row.classList.contains('qol-last-reply-agent');
+            var anchor = row.querySelector('.conv-customer .conv-email');
+            var badge = row.querySelector('.qol-reply-badge');
+            if (!anchor || (!isCustomer && !isAgent)) { if (badge) badge.remove(); return; }
+            var label = isCustomer ? 'Customer reply' : 'Agent reply';
+            if (badge && badge.textContent === label) return;
+            if (!badge) badge = document.createElement('span');
             badge.className = 'qol-reply-badge ' + (isCustomer ? 'qol-reply-customer' : 'qol-reply-agent');
-            badge.textContent = isCustomer ? 'Customer reply' : 'Agent reply';
-
+            badge.textContent = label;
             anchor.parentNode.insertBefore(badge, anchor.nextSibling);
         });
     }
@@ -298,8 +295,8 @@
     function initReplyBadges() {
         labelThreadReplies(document);
 
-        // Threads can be loaded/edited dynamically (new replies, ajax loads); watch for it.
-        var container = document.getElementById('conv-layout-main') || document.body;
+        // Mailbox sorting/pagination replaces rows without a full page load.
+        var container = document.body;
         if (!window.MutationObserver) return;
 
         var observer = new MutationObserver(function (mutations) {
